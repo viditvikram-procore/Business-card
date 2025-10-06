@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe - Digital Business Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg p-8 m-4">
+        <div class="flex flex-col items-center">
+            <!-- Profile Picture -->
+            <img class="w-32 h-32 rounded-full mb-4 shadow-md border-4 border-white" src="https://placehold.co/200x200/6366f1/white?text=JD" alt="Profile Picture">
+
+            <!-- Name and Title -->
+            <h1 class="text-3xl font-bold text-gray-800">John Doe</h1>
+            <p class="text-gray-500 text-lg mt-1">Senior Software Engineer</p>
+            <p class="text-gray-600 font-medium mt-1">Tech Solutions Inc.</p>
+
+            <!-- Action Buttons -->
+            <div class="w-full mt-8 space-y-3">
+                <button onclick="downloadVCard()" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <span class="flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Save Contact
+                    </span>
+                </button>
+                <a href="mailto:john.doe@example.com" class="w-full block text-center bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-xl hover:bg-gray-300 transition duration-300">Email Me</a>
+                <a href="tel:+11234567890" class="w-full block text-center bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-xl hover:bg-gray-300 transition duration-300">Call Me</a>
+                <a href="https://www.linkedin.com/in/johndoe" target="_blank" class="w-full block text-center bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-xl hover:bg-gray-300 transition duration-300">Connect on LinkedIn</a>
+                <a href="https://www.techsolutions.com" target="_blank" class="w-full block text-center bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-xl hover:bg-gray-300 transition duration-300">Visit Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- IMPORTANT: UPDATE YOUR DETAILS HERE ---
+        const contact = {
+            name: "John Doe",
+            firstName: "John",
+            lastName: "Doe",
+            title: "Senior Software Engineer",
+            company: "Tech Solutions Inc.",
+            phone: "+11234567890",
+            email: "john.doe@example.com",
+            website: "https://www.techsolutions.com",
+            linkedin: "https://www.linkedin.com/in/johndoe" // Optional
+        };
+
+        function downloadVCard() {
+            // Create the vCard content
+            const vCard = `BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName};;;
+FN:${contact.name}
+TITLE:${contact.title}
+ORG:${contact.company}
+TEL;TYPE=WORK,VOICE:${contact.phone}
+EMAIL:${contact.email}
+URL:${contact.website}
+URL;type=pref:${contact.linkedin}
+END:VCARD`;
+
+            // Create a Blob from the vCard content
+            const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+            
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            
+            // Set the filename for the download
+            link.setAttribute('download', `${contact.firstName.toLowerCase()}_${contact.lastName.toLowerCase()}.vcf`);
+            
+            // Append to the document, click, and then remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
